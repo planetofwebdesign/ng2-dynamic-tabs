@@ -1,3 +1,4 @@
+import { ITab } from '../tab/tab.model';
 import { AfterContentInit, Component, ContentChildren, QueryList } from '@angular/core';
 import 'rxjs/Rx';
 import { Observable, BehaviorSubject } from 'rxjs/Rx';
@@ -20,7 +21,7 @@ export class TabsComponent implements AfterContentInit {
   }
 
   selectTab(tab: TabComponent) {
-    this.tabs.toArray().forEach(tab => tab.active = false);
+    this.tabs.toArray().forEach((eachTab: ITab) => eachTab.active = false);
     tab.active = true;
     this.contentSbj.next(tab.contentRef);
   }
