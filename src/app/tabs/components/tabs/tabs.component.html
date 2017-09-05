@@ -1,0 +1,11 @@
+<div class="container">
+<ul class="nav nav-tabs">
+  <li *ngFor="let tab of tabs" (click)="selectTab(tab)" [class.active]="tab.active">
+    <a href="#">{{tab.title}}</a>
+  </li>
+</ul>
+<div class="tab-content">
+      <ng-container *ngComponentOutlet="content | async"></ng-container>
+</div>
+
+</div>
