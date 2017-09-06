@@ -4,8 +4,8 @@
     <a href="#">{{tab.title}}</a>
   </li>
 </ul>
-<div class="tab-content">
-      <ng-container *ngComponentOutlet="content | async"></ng-container>
+<div class="tab-content" #container>
+      <ng-container #vc ></ng-container>
 </div>
 
 </div>

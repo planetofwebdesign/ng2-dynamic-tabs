@@ -19,5 +19,6 @@ export class Table2Component implements OnInit {
     }
 
   ngOnInit() {
+        debugger;
   }
 }

@@ -13,6 +13,7 @@ export class TabComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
   }
 
   get title(): string {

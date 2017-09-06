@@ -1,5 +1,5 @@
 import { ITab } from '../tab/tab.model';
-import { AfterContentInit, Component, ContentChildren, QueryList } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, QueryList, ViewChild, ComponentFactoryResolver, ViewContainerRef } from '@angular/core';
 import 'rxjs/Rx';
 import { Observable, BehaviorSubject } from 'rxjs/Rx';
 import { TabComponent } from '../../components/tab/tab.component';
@@ -10,9 +10,14 @@ import { TabComponent } from '../../components/tab/tab.component';
 })
 export class TabsComponent implements AfterContentInit {
   @ContentChildren(TabComponent) tabs: QueryList<TabComponent>;
+  @ViewChild('container') container: any;
+  @ViewChild('vc', {read: ViewContainerRef}) vc: ViewContainerRef;
 
   private contentSbj = new BehaviorSubject<any>(null);
   content = this.contentSbj.asObservable();
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) { }
+
   ngAfterContentInit() {
     const activeTabs = this.tabs.filter((tab) => tab.active);
     if (activeTabs.length === 0) {
@@ -21,9 +26,11 @@ export class TabsComponent implements AfterContentInit {
   }
 
   selectTab(tab: TabComponent) {
+
     this.tabs.toArray().forEach((eachTab: ITab) => eachTab.active = false);
     tab.active = true;
-    this.contentSbj.next(tab.contentRef);
+    const factory = this.componentFactoryResolver.resolveComponentFactory(tab.contentRef);
+    this.vc.clear();
+    this.vc.createComponent(factory);
   }
-
 }
